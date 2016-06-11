@@ -5,6 +5,7 @@
    solarized-theme
    monokai-theme
    tangotango-theme
+   base16-theme
    emojify
    langtool
    define-word
