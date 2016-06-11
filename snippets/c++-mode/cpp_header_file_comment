@@ -1,0 +1,34 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cpp Header File Comment
+# key: hheader
+# binding: direct-keybinding
+# --
+//-----------------------------------------------------------------------------
+// Title      : $1
+// Project    : ALICE ITS WP10
+//-----------------------------------------------------------------------------
+// File       : `(buffer-name)`
+// Author     : Matthias Bonora (matthias.bonora@cern.ch)
+// Company    : CERN / University of Salzburg
+// Created    : `(format-time-string "%Y-%m-%d")`
+// Last update: `(format-time-string "%Y-%m-%d")`
+// Platform   : CERN 7 (CentOs)
+// Target     : Simulation
+// Standard   : SystemC 2.3
+//-----------------------------------------------------------------------------
+// Description: $2
+//-----------------------------------------------------------------------------
+// Copyright (c)   `(format-time-string "%Y")`
+//-----------------------------------------------------------------------------
+// Revisions  :
+// Date        Version  Author        Description
+// `(format-time-string "%Y-%m-%d")`  1.0      mbonora        Created
+//-----------------------------------------------------------------------------
+
+#pragma once
+
+#include <systemc>
+
+using sc_core::sc_module;
+
+$0
