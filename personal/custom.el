@@ -26,7 +26,8 @@
  '(vhdl-stutter-mode t)
  '(vhdl-upper-case-enum-values t)
  '(vhdl-upper-case-keywords nil)
- '(vhdl-use-direct-instantiation (quote always)))
+ '(vhdl-use-direct-instantiation (quote always))
+ '(whitespace-line-column 120))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
