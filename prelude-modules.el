@@ -1,16 +1,5 @@
 ;;; Uncomment the modules you'd like to use and restart Prelude afterwards
 
-(prelude-require-packages
- '(project-explorer
-   solarized-theme
-   monokai-theme
-   tangotango-theme
-   base16-theme
-   emojify
-   langtool
-   define-word
-   writegood-mode))
-
 ;; Emacs IRC client
 (require 'prelude-erc)
 (require 'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more

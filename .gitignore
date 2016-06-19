@@ -20,3 +20,4 @@ session*
 tramp
 /var/pcache
 anaconda-mode
+/request/curl-cookie-jar
