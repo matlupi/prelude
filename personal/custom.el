@@ -9,11 +9,39 @@
  '(flycheck-gcc-language-standard "c++11")
  '(global-linum-mode t)
  '(prelude-theme (quote tango-dark))
- '(user-mail-address "matthias.bonora@cern.ch")
- '(verilog-auto-newline nil)
- '(vhdl-clock-edge-condition (quote function))
+ '(user-mail-address "matteo.lupi@cern.ch")
+ '(show-paren-mode t)
+ ;;'(verilog-auto-newline nil)
+ '(vhdl-company-name "CERN European Organization for Nuclear Research")
+ '(vhdl-file-header "-------------------------------------------------------------------------------
+-- Title      : <title string>
+-- Project    : <project>
+-------------------------------------------------------------------------------
+-- File       : <filename>
+-- Author     : Matteo Lupi <matteo.lupi@cern.ch>
+-- Company    : <company>
+-- Company    : Goethe Universitaet Frankfurt am Main
+-- Created    : <date>
+-- Last update: <date>
+-- Platform   : <platform>
+-- Target     : Kintex 7
+-- Standard   : <standard>
+<projectdesc>-------------------------------------------------------------------------------
+-- Description: <description string>
+<copyright>-------------------------------------------------------------------------------
+-- Revisions  :
+-- Date        Version  Author  Description
+-- <date>  1.0      ML	Created
+-------------------------------------------------------------------------------
+
+<cursor>
+")
  '(vhdl-clock-name "")
- '(vhdl-company-name "CERN / University of Salzburg")
+ '(vhdl-clock-edge-condition (quote function))
+ '(vhdl-electric-mode t)
+ '(vhdl-reset-active-high t)
+ '(vhdl-reset-kind (quote sync))
+ '(vhdl-reset-name "RST"))
  '(vhdl-copyright-string
    "-------------------------------------------------------------------------------
 -- Copyright (c) <year>
@@ -34,3 +62,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(hl-line ((t (:background "SeaGreen4")))))
+
+
+(add-to-list 'auto-mode-alist '("\\.xdc\\'". tcl-mode))
+(add-to-list 'auto-mode-alist '("\\.il\\'". lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.pkg\\'". vhdl-mode))
+
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
