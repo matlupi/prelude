@@ -1,3 +1,4 @@
+;'(setq mac-option-modifier 'meta)
 ;;; init.el --- Prelude's configuration entry point.
 ;;
 ;; Copyright (c) 2011-2016 Bozhidar Batsov
@@ -10,7 +11,6 @@
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
-
 ;; This file simply sets up the default load path and requires
 ;; the various modules defined within Emacs Prelude.
 

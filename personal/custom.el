@@ -41,7 +41,8 @@
  '(vhdl-electric-mode t)
  '(vhdl-reset-active-high t)
  '(vhdl-reset-kind (quote sync))
- '(vhdl-reset-name "RST"))
+ '(vhdl-reset-name "RST")
+ ;;)
  '(vhdl-copyright-string
    "-------------------------------------------------------------------------------
 -- Copyright (c) <year>
