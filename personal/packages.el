@@ -10,5 +10,6 @@
    langtool
    define-word
    py-autopep8
-   writegood-mode)
+   writegood-mode
+   auctex-latexmk)
 )
