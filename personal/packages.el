@@ -12,4 +12,4 @@
    py-autopep8
    writegood-mode
    auctex-latexmk)
-)
+ )
