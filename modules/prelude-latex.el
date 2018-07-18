@@ -76,12 +76,23 @@
 
 (defun prelude-latex-mode-defaults ()
   "Default Prelude hook for `LaTeX-mode'."
-  (turn-on-auto-fill)
+  (auto-fill-mode -1)
+  (whitespace-mode -1)
   (abbrev-mode +1)
   (smartparens-mode +1)
   (case prelude-latex-fast-math-entry
     (LaTeX-math-mode (LaTeX-math-mode 1))
     (cdlatex (turn-on-cdlatex))))
+
+;; (defun prelude-latex-mode-defaults ()
+;;   "Default Prelude hook for `LaTeX-mode'."
+;;   ;;(turn-on-auto-fill)
+;;   (turn-on-auto-fill)
+;;   (abbrev-mode +1)
+;;   (smartparens-mode +1)
+;;   (case prelude-latex-fast-math-entry
+;;     (LaTeX-math-mode (LaTeX-math-mode 1))
+;;     (cdlatex (turn-on-cdlatex))))
 
 (setq prelude-latex-mode-hook 'prelude-latex-mode-defaults)
 
