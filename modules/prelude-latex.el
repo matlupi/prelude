@@ -78,6 +78,7 @@
   "Default Prelude hook for `LaTeX-mode'."
   (auto-fill-mode -1)
   (whitespace-mode -1)
+  (writegood-mode +1)
   (abbrev-mode +1)
   (smartparens-mode +1)
   (case prelude-latex-fast-math-entry
