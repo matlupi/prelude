@@ -72,8 +72,8 @@
 
 
 (add-to-list 'auto-mode-alist '("\\.xdc\\'". tcl-mode))
+(add-to-list 'auto-mode-alist '("\\.ino\\'". c-mode))
 (add-to-list 'auto-mode-alist '("\\.el\\'". lisp-mode))
-;;(add-to-list 'auto-mode-alist '("\\.pkg\\'". vhdl-mode))
 
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
