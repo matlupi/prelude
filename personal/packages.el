@@ -1,15 +1,29 @@
 (prelude-require-packages
- '(project-explorer
-   solarized-theme
+ '(auctex-latexmk
+   auto-complete-clang
+   base16-theme
+   blackboard-theme
+   clang-format
+   cmake-mode
+   company-anaconda
+   cpputils-cmake
+   define-word
    ein
    elpy
-   monokai-theme
-   tangotango-theme
-   base16-theme
    emojify
+   helm-swoop
    langtool
-   define-word
+   leuven-theme
+   monokai-theme
+   org-gnome
+   org-pomodoro
+   org-pomodoro
+   org-projectile
+   pdf-tools
+   project-explorer
    py-autopep8
-   writegood-mode
-   auctex-latexmk)
+   rtags
+   solarized-theme
+   tangotango-theme
+   writegood-mode)
  )
