@@ -69,10 +69,16 @@
           (output-pdf "PDF Viewer")
           (output-html "HTML Viewer")))
 
+  ;; Modified to use Skim as default editor on mac
   (setq TeX-view-program-list
         '(("DVI Viewer" "open %o")
-          ("PDF Viewer" "open %o")
+          ("PDF Viewer" "open %o -a Skim")
           ("HTML Viewer" "open %o"))))
+
+;; (setq TeX-view-program-list
+;;       '(("DVI Viewer" "open %o")
+;;         ("PDF Viewer" "open %o -a Skim")
+;;         ("HTML Viewer" "open %o"))))
 
 (defun prelude-latex-mode-defaults ()
   "Default Prelude hook for `LaTeX-mode'."
