@@ -44,8 +44,8 @@
 (setq ns-function-modifier 'hyper)
 
 ;; proced-mode doesn't work on OS X so we use vkill instead
-(autoload 'vkill "vkill" nil t)
-(global-set-key (kbd "C-x p") 'vkill)
+;;(autoload 'vkill "vkill" nil t)
+;;(global-set-key (kbd "C-x p") 'vkill)
 
 (defun prelude-swap-meta-and-super ()
   "Swap the mapping of Meta and Super.
