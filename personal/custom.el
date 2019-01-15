@@ -13,6 +13,9 @@
  ;; If there is more than one, they won't work right.
  '(hl-line ((t (:background "SeaGreen4")))))
 
+;; line number mode is on by default
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
 
 (add-to-list 'auto-mode-alist '("\\.xdc\\'". tcl-mode))
 (add-to-list 'auto-mode-alist '("\\.ino\\'". c-mode))
