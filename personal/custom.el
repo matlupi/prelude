@@ -10,6 +10,11 @@
  '(flycheck-gcc-language-standard "c++11")
  '(global-linum-mode t)
  '(prelude-theme (quote tango-dark))
+ '(safe-local-variable-values
+   (quote
+    ((TeX-command-extra-options \`
+                                (\` -enable-write18))
+     (eval verilog-read-includes))))
  '(show-paren-mode t)
  '(user-mail-address "matteo.lupi@cern.ch")
  '(vhdl-clock-edge-condition (quote function))
