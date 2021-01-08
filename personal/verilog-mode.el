@@ -127,6 +127,7 @@ This function needs to be run in `verilog-mode-hook'."
  '(verilog-auto-endcomments t)
  '(verilog-minimum-comment-distance 0)
  '(verilog-indent-begin-after-if nil)
+ '(verilog-auto-lineup t)
  )
 
 ;;; moved from custom on pcphaiddt001
