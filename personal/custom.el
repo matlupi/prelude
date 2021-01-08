@@ -7,10 +7,10 @@
  '(global-linum-mode t)
  '(package-selected-packages
    (quote
--    (puppet-mode zop-to-char zenburn-theme yaml-mode writegood-mode which-key volatile-highlights undo-tree tangotango-theme solarized-theme smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters py-autopep8 project-explorer ov operate-on-number move-text monokai-theme markdown-mode magit langtool key-chord json-mode js2-mode imenu-anywhere ido-ubiquitous helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region emojify elpy elisp-slime-nav ein easy-kill discover-my-major diminish diff-hl define-word csv-mode crux company-auctex company-anaconda cdlatex caml browse-kill-ring beacon base16-theme auctex-latexmk anzu ace-window)))
-- ;; These following packets were removed by bbastov in newer versions evaluate if to remove them as well
--'(package-selected-packages
--  (quote
+    (puppet-mode zop-to-char zenburn-theme yaml-mode writegood-mode which-key volatile-highlights undo-tree tangotango-theme solarized-theme smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters py-autopep8 project-explorer ov operate-on-number move-text monokai-theme markdown-mode magit langtool key-chord json-mode js2-mode imenu-anywhere ido-ubiquitous helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region emojify elpy elisp-slime-nav ein easy-kill discover-my-major diminish diff-hl define-word csv-mode crux company-auctex company-anaconda cdlatex caml browse-kill-ring beacon base16-theme auctex-latexmk anzu ace-window)))
+;; These following packets were removed by bbastov in newer versions evaluate if to remove them as well
+'(package-selected-packages
+  (quote
     (rtags pdf-tools org-pomodoro org-gnome leuven-theme helm-swoop cpputils-cmake cmake-mode clang-format blackboard-theme auto-complete-clang jedi super-save ido-completing-read+ hl-todo helm-ag exec-path-from-shell editorconfig)))
 '(package-selected-packages
   (quote
