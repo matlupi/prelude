@@ -1,7 +1,7 @@
 ;'(setq mac-option-modifier 'meta)
 ;;; init.el --- Prelude's configuration entry point.
 ;;
-;; Copyright (c) 2011-2016 Bozhidar Batsov
+;; Copyright (c) 2011-2018 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: http://batsov.com/prelude
@@ -37,16 +37,16 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;(package-initialize)
 
 (defvar current-user
-      (getenv
-       (if (equal system-type 'windows-nt) "USERNAME" "USER")))
+  (getenv
+   (if (equal system-type 'windows-nt) "USERNAME" "USER")))
 
 (message "Prelude is powering up... Be patient, Master %s!" current-user)
 
-(when (version< emacs-version "24.4")
-  (error "Prelude requires at least GNU Emacs 24.4, but you're running %s" emacs-version))
+(when (version< emacs-version "25.1")
+  (error "Prelude requires GNU Emacs 25.1 or newer, but you're running %s" emacs-version))
 
 ;; Always load newest byte code
 (setq load-prefer-newer t)
@@ -69,8 +69,13 @@ by Prelude.")
   "This directory houses packages that are not yet available in ELPA (or MELPA).")
 (defvar prelude-savefile-dir (expand-file-name "savefile" prelude-dir)
   "This folder stores all the automatically generated save/history-files.")
-(defvar prelude-modules-file (expand-file-name "prelude-modules.el" prelude-dir)
-  "This files contains a list of modules that will be loaded by Prelude.")
+(defvar prelude-modules-file (expand-file-name "prelude-modules.el" prelude-personal-dir)
+  "This file contains a list of modules that will be loaded by Prelude.")
+(defvar prelude-deprecated-modules-file
+  (expand-file-name "prelude-modules.el" prelude-dir)
+  (format "This file may contain a list of Prelude modules.
+
+This is DEPRECATED, use %s instead." prelude-modules-file))
 
 (unless (file-exists-p prelude-savefile-dir)
   (make-directory prelude-savefile-dir))
@@ -100,7 +105,7 @@ by Prelude.")
 ;; preload the personal settings from `prelude-personal-preload-dir'
 (when (file-exists-p prelude-personal-preload-dir)
   (message "Loading personal configuration files in %s..." prelude-personal-preload-dir)
-  (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#].*el$")))
+  (mapc 'load (directory-files prelude-personal-preload-dir 't "^[^#\.].*el$")))
 
 (message "Loading Prelude's core...")
 
@@ -113,30 +118,145 @@ by Prelude.")
 (require 'prelude-editor)
 (require 'prelude-global-keybindings)
 
-;; OSX specific settings
+;; macOS specific settings
 (when (eq system-type 'darwin)
-  (require 'prelude-osx))
+  (require 'prelude-macos))
+
+;; Linux specific settings
+(when (eq system-type 'gnu/linux)
+  (require 'prelude-linux))
 
 (message "Loading Prelude's modules...")
 
 ;; the modules
 (if (file-exists-p prelude-modules-file)
-    (load prelude-modules-file)
-  (message "Missing modules file %s" prelude-modules-file)
-  (message "You can get started by copying the bundled example file"))
+    (progn
+      (load prelude-modules-file)
+      (if (file-exists-p prelude-deprecated-modules-file)
+          (message "Loading new modules configuration, ignoring DEPRECATED prelude-module.el")))
+  (if (file-exists-p prelude-deprecated-modules-file)
+      (progn
+        (load prelude-deprecated-modules-file)
+        (message (format "The use of %s is DEPRECATED! Use %s instead!"
+                         prelude-deprecated-modules-file
+                         prelude-modules-file)))
+    (message "Missing modules file %s" prelude-modules-file)
+    (message "You can get started by copying the bundled example file from sample/prelude-modules.el")))
 
-;; config changes made through the customize UI will be store here
+;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" prelude-personal-dir))
 
 ;; load the personal settings (this includes `custom-file')
 (when (file-exists-p prelude-personal-dir)
   (message "Loading personal configuration files in %s..." prelude-personal-dir)
-  (mapc 'load (directory-files prelude-personal-dir 't "^[^#].*el$")))
+  (mapc 'load (delete
+               prelude-modules-file
+               (directory-files prelude-personal-dir 't "^[^#\.].*\\.el$"))))
 
 (message "Prelude is ready to do thy bidding, Master %s!" current-user)
+
+;; Patch security vulnerability in Emacs versions older than 25.3
+(when (version< emacs-version "25.3")
+  (with-eval-after-load "enriched"
+    (defun enriched-decode-display-prop (start end &optional param)
+      (list start end))))
 
 (prelude-eval-after-init
  ;; greet the use with some useful tip
  (run-at-time 5 nil 'prelude-tip-of-the-day))
+
+;; enables hunspell for ispell
+;;(on macos https://joelkuiper.eu/spellcheck_emacs, http://apple.stackexchange.com/questions/97811/where-are-the-system-spellchecking-dictionaries
+;;brew install hunspell
+;;cd /Library
+;;sudo mkdir Spelling
+;;cd Spelling
+;;)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (when (executable-find "hunspell")                                                                   ;;
+;;   (setq-default ispell-program-name "hunspell")                                                      ;;
+;;   (setq ispell-really-hunspell t))                                                                   ;;
+;;                                                                                                      ;;
+;; (setq ispell-program-name "hunspell")                                                                ;;
+;; ;; below two lines reset the the hunspell to it STOPS querying locale!                               ;;
+;; (setq ispell-local-dictionary "en_GB") ; "en_US" is key to lookup in `ispell-local-dictionary-alist` ;;
+;; (setq ispell-local-dictionary-alist                                                                  ;;
+;;       '(("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_GB") nil utf-8)))                  ;;
+;;                                                                                                      ;;
+;; (setenv "DICTIONARY" "en_GB")                                                                        ;;
+;; (getenv "LANG")                                                                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; if (aspell installed) { use aspell}
+;; else if (hunspell installed) { use hunspell }
+;; whatever spell checker I use, I always use English dictionary
+;; I prefer use aspell because:
+;; 1. aspell is older
+;; 2. looks Kevin Atkinson still get some road map for aspell:
+;; @see http://lists.gnu.org/archive/html/aspell-announce/2011-09/msg00000.html
+(defun flyspell-detect-ispell-args (&optional run-together)
+  "if RUN-TOGETHER is true, spell check the CamelCase words."
+  (let (args)
+    (cond
+     ((string-match  "aspell$" ispell-program-name)
+      ;; Force the English dictionary for aspell
+      ;; Support Camel Case spelling check (tested with aspell 0.6)
+      (setq args (list "--sug-mode=ultra" "--lang=en_GB"))
+      (if run-together
+          (setq args (append args '("--run-together" "--run-together-limit=5" "--run-together-min=2")))))
+     ((string-match "hunspell$" ispell-program-name)
+      ;; Force the English dictionary for hunspell
+      (setq args "-d en_GB")))
+    args))
+
+(cond
+ ((executable-find "aspell")
+  ;; you may also need `ispell-extra-args'
+  (setq ispell-program-name "aspell"))
+; ((executable-find "hunspell")
+;  (setq ispell-program-name "hunspell")
+
+  ;; Please note that `ispell-local-dictionary` itself will be passed to hunspell cli with "-d"
+  ;; it's also used as the key to lookup ispell-local-dictionary-alist
+  ;; if we use different dictionary
+  (setq ispell-local-dictionary "en_GB")
+  (setq ispell-local-dictionary-alist
+        '(("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_GB") nil utf-8))))
+ ;((setq ispell-program-name nil))
+
+;; ispell-cmd-args is useless, it's the list of *extra* arguments we will append to the ispell process when "ispell-word" is called.
+;; ispell-extra-args is the command arguments which will *always* be used when start ispell process
+;; Please note when you use hunspell, ispell-extra-args will NOT be used.
+;; Hack ispell-local-dictionary-alist instead.
+(setq-default ispell-extra-args (flyspell-detect-ispell-args t))
+;; (setq ispell-cmd-args (flyspell-detect-ispell-args))
+(defadvice ispell-word (around my-ispell-word activate)
+  (let ((old-ispell-extra-args ispell-extra-args))
+    (ispell-kill-ispell t)
+    (setq ispell-extra-args (flyspell-detect-ispell-args))
+    ad-do-it
+    (setq ispell-extra-args old-ispell-extra-args)
+    (ispell-kill-ispell t)
+    ))
+
+(defadvice flyspell-auto-correct-word (around my-flyspell-auto-correct-word activate)
+  (let ((old-ispell-extra-args ispell-extra-args))
+    (ispell-kill-ispell t)
+    ;; use emacs original arguments
+    (setq ispell-extra-args (flyspell-detect-ispell-args))
+    ad-do-it
+    ;; restore our own ispell arguments
+    (setq ispell-extra-args old-ispell-extra-args)
+    (ispell-kill-ispell t)
+    ))
+
+(defun text-mode-hook-setup ()
+  ;; Turn off RUN-TOGETHER option when spell check text-mode
+  (setq-local ispell-extra-args (flyspell-detect-ispell-args)))
+(add-hook 'text-mode-hook 'text-mode-hook-setup)
+
+
 
 ;;; init.el ends here

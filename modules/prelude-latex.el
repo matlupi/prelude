@@ -1,6 +1,6 @@
 ;;; prelude-latex.el --- Emacs Prelude: Sane setup for LaTeX writers.
 ;;
-;; Copyright © 2011-2016 Bozhidar Batsov
+;; Copyright © 2011-2018 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.com>
 ;; URL: https://github.com/bbatsov/prelude
@@ -37,10 +37,9 @@
 ;; for case
 (require 'cl)
 
-(eval-after-load "company"
-  '(progn
-     (prelude-require-packages '(company-auctex))
-     (company-auctex-init)))
+(with-eval-after-load "company"
+  (prelude-require-packages '(company-auctex))
+  (company-auctex-init))
 
 (defcustom prelude-latex-fast-math-entry 'LaTeX-math-mode
   "Method used for fast math symbol entry in LaTeX."
@@ -62,26 +61,44 @@
 ;; use pdflatex
 (setq TeX-PDF-mode t)
 
-;; sensible defaults for OS X, other OSes should be covered out-of-the-box
+;; sensible defaults for macOS, other OSes should be covered out-of-the-box
 (when (eq system-type 'darwin)
   (setq TeX-view-program-selection
         '((output-dvi "DVI Viewer")
           (output-pdf "PDF Viewer")
           (output-html "HTML Viewer")))
 
+  ;; Modified to use Skim as default editor on mac
   (setq TeX-view-program-list
         '(("DVI Viewer" "open %o")
-          ("PDF Viewer" "open %o")
+          ("PDF Viewer" "open %o -a Skim")
           ("HTML Viewer" "open %o"))))
+
+;; (setq TeX-view-program-list
+;;       '(("DVI Viewer" "open %o")
+;;         ("PDF Viewer" "open %o -a Skim")
+;;         ("HTML Viewer" "open %o"))))
 
 (defun prelude-latex-mode-defaults ()
   "Default Prelude hook for `LaTeX-mode'."
-  (turn-on-auto-fill)
+  (auto-fill-mode -1)
+  (whitespace-mode -1)
+  (writegood-mode +1)
   (abbrev-mode +1)
   (smartparens-mode +1)
   (case prelude-latex-fast-math-entry
     (LaTeX-math-mode (LaTeX-math-mode 1))
     (cdlatex (turn-on-cdlatex))))
+
+;; (defun prelude-latex-mode-defaults ()
+;;   "Default Prelude hook for `LaTeX-mode'."
+;;   ;;(turn-on-auto-fill)
+;;   (turn-on-auto-fill)
+;;   (abbrev-mode +1)
+;;   (smartparens-mode +1)
+;;   (case prelude-latex-fast-math-entry
+;;     (LaTeX-math-mode (LaTeX-math-mode 1))
+;;     (cdlatex (turn-on-cdlatex))))
 
 (setq prelude-latex-mode-hook 'prelude-latex-mode-defaults)
 

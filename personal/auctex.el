@@ -20,3 +20,7 @@
 ;; Setting up writegood-mode
 (require 'writegood-mode)
 (global-set-key "\C-cg" 'writegood-mode)
+
+;; requires latexmk
+(require 'auctex-latexmk)
+(auctex-latexmk-setup)
