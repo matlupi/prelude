@@ -112,6 +112,7 @@ This function needs to be run in `verilog-mode-hook'."
  '(verilog-auto-inst-param-value t)
  '(verilog-auto-inst-vector nil)
  '(verilog-auto-lineup (quote all))
+ '(verilog-auto-lineup t)
  '(verilog-auto-newline nil)
  '(verilog-auto-template-warn-unused t)
  '(verilog-case-indent 2)
@@ -127,7 +128,6 @@ This function needs to be run in `verilog-mode-hook'."
  '(verilog-auto-endcomments t)
  '(verilog-minimum-comment-distance 0)
  '(verilog-indent-begin-after-if nil)
- '(verilog-auto-lineup t)
  )
 
 ;;; moved from custom on pcphaiddt001
